@@ -8,6 +8,7 @@ import com.sekolah.websekolah.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -42,9 +43,9 @@ public class UserControllerImpl implements UserController{
     }
 
     @Override
-    public List<User> listUser() {
+    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException {
 
-        return userService.listUser();
+        return userService.listUser(requestMap);
 
     }
 

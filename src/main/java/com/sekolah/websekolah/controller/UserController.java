@@ -17,7 +17,7 @@ public interface UserController {
     public ResponseEntity<String> login(@RequestBody(required = true) Map<String,String> requestMap);
 
     @GetMapping(path = "/all")
-    public List<User> listUser();
+    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException;
 
     @PostMapping(path = "/forgotpassword")
     ResponseEntity<String>forgotPassword(@RequestBody Map<String,String> requestMap);

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.SecureRandom;
 import java.time.Instant;
@@ -35,28 +36,34 @@ public class UserService {
 
     public ResponseEntity<String> createAccount(Map<String, String> requestMap) {
         log.info("Inside Create Account",requestMap);
-        try {
-            if (!validateCreateAccountMap(requestMap)) {
-                return UserUtils.getResponseEntity(ApiConstant.INVALID_DATA, HttpStatus.BAD_REQUEST);
+
+        String userRole = requestMap.get("role");
+        if ("owner".equalsIgnoreCase(userRole)) {
+
+            try {
+
+                if (!validateCreateAccountMap(requestMap)) {
+                    return UserUtils.getResponseEntity(ApiConstant.INVALID_DATA, HttpStatus.BAD_REQUEST);
+                }
+
+                String email = requestMap.get("email");
+                if (userRepository.existsByEmail(email)) {
+                    return UserUtils.getResponseEntity("Email already exists", HttpStatus.BAD_REQUEST);
+                }
+
+                String name = requestMap.get("name");
+                Optional<User> userOptional = userRepository.findByName(name);
+                if (userOptional.isPresent()) {
+                    return UserUtils.getResponseEntity("Username already exists", HttpStatus.BAD_REQUEST);
+                }
+
+                User user = createUserFromMap(requestMap);
+                return UserUtils.getResponseEntity("Successfully Create Account !", HttpStatus.OK);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
 
-            String email = requestMap.get("email");
-            if (userRepository.existsByEmail(email)) {
-                return UserUtils.getResponseEntity("Email already exists", HttpStatus.BAD_REQUEST);
-            }
-
-            String name = requestMap.get("name");
-            Optional<User> userOptional = userRepository.findByName(name);
-            if (userOptional.isPresent()) {
-                return UserUtils.getResponseEntity("Username already exists", HttpStatus.BAD_REQUEST);
-            }
-
-            User user = createUserFromMap(requestMap);
-            return UserUtils.getResponseEntity("Successfully Create Account !", HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return UserUtils.getResponseEntity(ApiConstant.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        }    return UserUtils.getResponseEntity("Invalid user role", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateCreateAccountMap(Map<String, String> requestMap) {
@@ -113,8 +120,11 @@ public class UserService {
         return new ResponseEntity<>("{\"message\":\"Bad Credentials. Please check your password or email\"}", HttpStatus.BAD_REQUEST);
     }
 
-    public List<User> listUser() {
-        return userRepository.findAll();
+    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException {
+        String userRole = requestMap.get("role");
+        if ("owner".equalsIgnoreCase(userRole)) {
+            return userRepository.findAll();
+        } throw new AllException("Invalid User Role");
     }
 
     public ResponseEntity<String> changePassword(Map<String, String> requestMap, String userEmail) {
