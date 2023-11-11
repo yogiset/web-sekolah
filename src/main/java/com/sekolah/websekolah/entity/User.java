@@ -19,10 +19,10 @@ public class User {
     @SequenceGenerator(name = "staff_sequence", sequenceName = "staff_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String name;
     private String email;
     private String password;
-    private Integer no_telp;
+    private String no_telp;
     private String role;
     private String status;
     private Instant created;
