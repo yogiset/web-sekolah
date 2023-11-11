@@ -32,7 +32,6 @@ public interface UserController {
     public String deleteUserById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException;
 
     @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable("id") Long id,
-                                   @RequestBody User user,Map<String, String> requestMap) throws AllException;
+    public User updateUser(@PathVariable("id") Long id,@RequestBody User user,Map<String, String> requestMap) throws AllException;
 
 }

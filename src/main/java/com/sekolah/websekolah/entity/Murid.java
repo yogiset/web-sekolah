@@ -27,6 +27,8 @@ public class Murid {
     private LocalDate tgl_lahir;
     private Integer umur;
     private String alamat;
+    @Column(columnDefinition="text")
+    private String foto;
 
     public Integer getUmur() {
         return Period.between(this.tgl_lahir,LocalDate.now()).getYears();

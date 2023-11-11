@@ -43,7 +43,7 @@ public class UserControllerImpl implements UserController{
     }
 
     @Override
-    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException {
+    public List<User> listUser(Map<String,String> requestMap) throws AllException {
 
         return userService.listUser(requestMap);
 

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class Berita {
     private Long id;
     private String judul;
     private String tanggal;
+    private LocalDate tanggals;
     @Column(columnDefinition="text")
     private String image;
     private String deskripsi;

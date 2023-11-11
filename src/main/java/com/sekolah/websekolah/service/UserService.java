@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.List;
@@ -120,7 +118,7 @@ public class UserService {
         return new ResponseEntity<>("{\"message\":\"Bad Credentials. Please check your password or email\"}", HttpStatus.BAD_REQUEST);
     }
 
-    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException {
+    public List<User> listUser(Map<String,String> requestMap) throws AllException {
         String userRole = requestMap.get("role");
         if ("owner".equalsIgnoreCase(userRole)) {
             return userRepository.findAll();
