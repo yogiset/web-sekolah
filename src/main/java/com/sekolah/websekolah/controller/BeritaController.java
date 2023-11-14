@@ -1,6 +1,7 @@
 package com.sekolah.websekolah.controller;
 
 
+import com.sekolah.websekolah.entity.Agenda;
 import com.sekolah.websekolah.entity.Berita;
 import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.service.BeritaService;
@@ -26,6 +27,15 @@ public class BeritaController {
     @GetMapping("/all")
     public List<Berita> showAllBerita(@RequestBody Map<String, String> requestMap) throws AllException {
         return beritaService.showAllBerita(requestMap);
+    }
+
+    @GetMapping("/sortAsc/{field}")
+    public List<Berita> showAllBeritaByAsc(@PathVariable String field) throws AllException {
+        return beritaService.showAllBeritaAscending(field);
+    }
+    @GetMapping("/sortDsc/{field}")
+    public List<Berita> showAllBeritaByDsc(@PathVariable String field) throws AllException {
+        return beritaService.showAllBeritaDescending(field);
     }
 
     @GetMapping("/cari/{judul}")

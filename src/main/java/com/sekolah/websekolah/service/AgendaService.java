@@ -5,6 +5,7 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.AgendaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -56,6 +57,15 @@ public class AgendaService {
             return agendaRepository.findAll();
 
         } throw new AllException("Invalid User Role");
+    }
+
+    public List<Agenda> showAllAgendaAscending(String field) {
+
+        return agendaRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
+    public List<Agenda> showAllAgendaDescending(String field) {
+
+        return agendaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Agenda fetchAgendaByJudul(String judul, Map<String, String> requestMap) throws AllException {
@@ -137,4 +147,8 @@ public class AgendaService {
 
         } throw new AllException("Invalid User Role");
     }
+
+
+
+
 }

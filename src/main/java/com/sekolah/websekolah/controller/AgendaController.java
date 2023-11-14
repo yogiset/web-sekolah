@@ -25,6 +25,14 @@ public class AgendaController {
     public List<Agenda> showAllAgenda(@RequestBody Map<String, String> requestMap) throws AllException {
         return agendaService.showAllAgenda(requestMap);
     }
+    @GetMapping("/sortAsc/{field}")
+    public List<Agenda> showAllAgendaByAsc(@PathVariable String field) throws AllException {
+        return agendaService.showAllAgendaAscending(field);
+    }
+    @GetMapping("/sortDsc/{field}")
+    public List<Agenda> showAllAgendaByDsc(@PathVariable String field) throws AllException {
+        return agendaService.showAllAgendaDescending(field);
+    }
 
     @GetMapping("/cari/{judul}")
     public Agenda fetchAgendaByJudul(@PathVariable("judul") String judul,@RequestBody Map<String, String> requestMap) throws AllException {

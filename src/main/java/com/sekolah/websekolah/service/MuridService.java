@@ -6,6 +6,7 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.MuridRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,16 @@ public class MuridService {
         String userRole = requestMap.get("role");
         if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
-            muridRepository.findAll();
+          return muridRepository.findAll();
         } throw new AllException("Invalid User Role");
 
+    }
+    public List<Murid> showAllMuridAscending(String field) {
+        return muridRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
+
+    public List<Murid> showAllMuridDescending(String field) {
+        return muridRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Murid fetchMuridByNama(String nama, Map<String, String> requestMap) throws AllException {
@@ -142,4 +150,5 @@ public class MuridService {
         } throw new AllException("Invalid User Role");
 
     }
+
 }

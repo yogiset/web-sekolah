@@ -1,5 +1,6 @@
 package com.sekolah.websekolah.controller;
 
+import com.sekolah.websekolah.entity.Berita;
 import com.sekolah.websekolah.entity.Staff;
 import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.service.StaffService;
@@ -24,6 +25,15 @@ private final StaffService staffService;
     @GetMapping("/all")
     public List<Staff> showAllStaff(@RequestBody Map<String, String> requestMap) throws AllException {
         return staffService.showAllStaff(requestMap);
+    }
+
+    @GetMapping("/sortAsc/{field}")
+    public List<Staff> showAllStaffByAsc(@PathVariable String field) throws AllException {
+        return staffService.showAllStafffAscending(field);
+    }
+    @GetMapping("/sortDsc/{field}")
+    public List<Staff> showAllStaffByDsc(@PathVariable String field) throws AllException {
+        return staffService.showAllStaffDescending(field);
     }
 
     @GetMapping("/cari/{nama}")

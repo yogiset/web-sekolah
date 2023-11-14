@@ -8,7 +8,6 @@ import com.sekolah.websekolah.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,7 +47,15 @@ public class UserControllerImpl implements UserController{
         return userService.listUser(requestMap);
 
     }
+    @Override
+    public List<User> showAllUserByAsc(String field) throws AllException {
+        return userService.showAllUserByAsccending(field);
+    }
 
+    @Override
+    public List<User> showAllUserByDsc(String field) throws AllException {
+        return userService.showAllUserByDescending(field);
+    }
     @Override
     public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
         try {

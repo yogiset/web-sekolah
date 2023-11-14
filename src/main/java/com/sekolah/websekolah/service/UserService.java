@@ -2,6 +2,7 @@ package com.sekolah.websekolah.service;
 
 import com.google.common.base.Strings;
 import com.sekolah.websekolah.constant.ApiConstant;
+import com.sekolah.websekolah.entity.Staff;
 import com.sekolah.websekolah.entity.User;
 import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.jwt.JwtUtil;
@@ -9,6 +10,7 @@ import com.sekolah.websekolah.repository.UserRepository;
 import com.sekolah.websekolah.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -123,6 +125,14 @@ public class UserService {
         if ("owner".equalsIgnoreCase(userRole)) {
             return userRepository.findAll();
         } throw new AllException("Invalid User Role");
+    }
+
+    public List<User> showAllUserByAsccending(String field) {
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
+
+    public List<User> showAllUserByDescending(String field) {
+        return userRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public ResponseEntity<String> changePassword(Map<String, String> requestMap, String userEmail) {

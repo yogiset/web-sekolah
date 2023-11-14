@@ -7,6 +7,7 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,9 +51,17 @@ public class StaffService {
         String userRole = requestMap.get("role");
         if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
-         staffRepository.findAll();
+        return staffRepository.findAll();
         } throw new AllException("Invalid User Role");
 
+    }
+
+    public List<Staff> showAllStafffAscending(String field) {
+        return staffRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
+
+    public List<Staff> showAllStaffDescending(String field) {
+        return staffRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Staff fetchStaffByNama(String nama, Map<String, String> requestMap) throws AllException {
@@ -136,4 +145,5 @@ public class StaffService {
             return updatedStaff;
         } throw new AllException("Invalid User Role");
     }
+
 }

@@ -1,6 +1,7 @@
 package com.sekolah.websekolah.controller;
 
 
+import com.sekolah.websekolah.entity.Berita;
 import com.sekolah.websekolah.entity.Murid;
 import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.service.MuridService;
@@ -23,6 +24,15 @@ public class MuridController {
     @GetMapping("/all")
     public List<Murid> showAllMurid(@RequestBody Map<String, String> requestMap) throws AllException {
         return muridService.showAllMurid(requestMap);
+    }
+
+    @GetMapping("/sortAsc/{field}")
+    public List<Murid> showAllMuridByAsc(@PathVariable String field) throws AllException {
+        return muridService.showAllMuridAscending(field);
+    }
+    @GetMapping("/sortDsc/{field}")
+    public List<Murid> showAllMuridByDsc(@PathVariable String field) throws AllException {
+        return muridService.showAllMuridDescending(field);
     }
 
     @GetMapping("/cari/{nama}")

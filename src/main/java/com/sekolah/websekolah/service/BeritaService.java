@@ -5,6 +5,7 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.BeritaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,9 +55,17 @@ public class BeritaService {
         String userRole = requestMap.get("role");
         if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
-         beritaRepository.findAll();
+        return beritaRepository.findAll();
 
         } throw new AllException("Invalid User Role");
+    }
+
+    public List<Berita> showAllBeritaAscending(String field) {
+        return beritaRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
+
+    public List<Berita> showAllBeritaDescending(String field) {
+        return beritaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Berita fetchBeritaByJudul(String judul, Map<String, String> requestMap) throws AllException {
@@ -143,4 +152,6 @@ public class BeritaService {
 
         } throw new AllException("Invalid User Role");
     }
+
+
 }

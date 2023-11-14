@@ -1,5 +1,6 @@
 package com.sekolah.websekolah.controller;
 
+import com.sekolah.websekolah.entity.Staff;
 import com.sekolah.websekolah.entity.User;
 import com.sekolah.websekolah.exception.AllException;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ public interface UserController {
     public ResponseEntity<String> createAccount(@RequestBody(required = true) Map<String,String> requestMap);
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(@RequestBody(required = true) Map<String,String> requestMap);
-
     @GetMapping(path = "/all")
     public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException;
-
+    @GetMapping("/sortAsc/{field}")
+    public List<User> showAllUserByAsc(@PathVariable String field) throws AllException;
+    @GetMapping("/sortDsc/{field}")
+    public List<User> showAllUserByDsc(@PathVariable String field) throws AllException;
     @PostMapping(path = "/forgotpassword")
     ResponseEntity<String>forgotPassword(@RequestBody Map<String,String> requestMap);
 
