@@ -121,17 +121,18 @@ public class UserService {
     }
 
     public List<User> listUser(Map<String,String> requestMap) throws AllException {
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole)) {
+        log.info("Inside listUser");
             return userRepository.findAll();
-        } throw new AllException("Invalid User Role");
+
     }
 
     public List<User> showAllUserByAsccending(String field) {
+        log.info("Inside showAllUserByAsccending");
         return userRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
 
     public List<User> showAllUserByDescending(String field) {
+        log.info("Inside showAllUserByDescending");
         return userRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
@@ -230,18 +231,11 @@ public class UserService {
     }
 
     public User fetchUserByName(String name,Map<String, String> requestMap) throws AllException {
-
-      String userRole = requestMap.get("role");
-
-        if ("owner".equalsIgnoreCase(userRole)) {
             Optional<User> user = userRepository.findByName(name);
-
             if (!user.isPresent()) {
                 throw new AllException("User tidak ditemukan");
             }
             return user.get();
-
-        } throw new AllException("Invalid user role");
     }
 
     public void deleteUserById(Long id,Map<String, String> requestMap) throws AllException {

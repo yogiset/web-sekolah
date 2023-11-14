@@ -51,19 +51,16 @@ public class AgendaService {
     public List<Agenda> showAllAgenda(Map<String, String> requestMap) throws AllException {
         log.info("Inside showAllAgenda");
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
-
             return agendaRepository.findAll();
-
-        } throw new AllException("Invalid User Role");
     }
 
     public List<Agenda> showAllAgendaAscending(String field) {
+        log.info("Inside showAllAgendaAsccending");
 
         return agendaRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
     public List<Agenda> showAllAgendaDescending(String field) {
+        log.info("Inside showAllAgendaDesccending");
 
         return agendaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
@@ -71,29 +68,21 @@ public class AgendaService {
     public Agenda fetchAgendaByJudul(String judul, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchAgendaByJudul");
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             Optional<Agenda> agenda = agendaRepository.findByJudul(judul);
             if (!agenda.isPresent()) {
                 throw new AllException("Judul Agenda tidak ditemukan");
             }
             return agenda.get();
-        } throw new AllException("Invalid User Role");
+
     }
 
     public Agenda fetchAgendaByTanggal(LocalDate tanggals, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchAgendaByTanggal");
-
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             Optional<Agenda> agenda = agendaRepository.findByTanggals(tanggals);
             if (!agenda.isPresent()) {
                 throw new AllException("Tanggal Agenda tidak ditemukan");
             }
             return agenda.get();
-
-
-        } throw new AllException("Invalid User Role");
     }
 
     public void deleteAgendaById(Long id, Map<String, String> requestMap) throws AllException {

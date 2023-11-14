@@ -48,48 +48,35 @@ public class StaffService {
 
     public List<Staff> showAllStaff(Map<String, String> requestMap) throws AllException {
         log.info("Inside showAllStaff");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
-
         return staffRepository.findAll();
-        } throw new AllException("Invalid User Role");
-
     }
 
     public List<Staff> showAllStafffAscending(String field) {
+        log.info("Inside showAllStaffAscending");
         return staffRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
 
     public List<Staff> showAllStaffDescending(String field) {
+        log.info("Inside showAllStaffDescending");
         return staffRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Staff fetchStaffByNama(String nama, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchStaffByNama");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
-
             Optional<Staff> staff = staffRepository.findByNama(nama);
             if (!staff.isPresent()) {
                 throw new AllException("Nama staff tidak ditemukan");
             }
             return staff.get();
-
-        } throw new AllException("Invalid User Role");
     }
 
     public Staff fetchStaffByNis(String nip, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchStaffByNis");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
-
             Optional<Staff> staff = staffRepository.findByNip(nip);
             if (!staff.isPresent()) {
                 throw new AllException("NIP staff tidak ditemukan");
             }
             return staff.get();
-
-        } throw new AllException("Invalid User Role");
     }
 
     public void deleteStaffById(Long id, Map<String, String> requestMap) throws AllException {

@@ -52,46 +52,35 @@ public class BeritaService {
 
     public List<Berita> showAllBerita(Map<String, String> requestMap) throws AllException {
         log.info("Inside showAllBerita");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
-
         return beritaRepository.findAll();
-
-        } throw new AllException("Invalid User Role");
     }
 
     public List<Berita> showAllBeritaAscending(String field) {
+        log.info("Inside showAllBeritaAscending");
         return beritaRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
 
     public List<Berita> showAllBeritaDescending(String field) {
+        log.info("Inside showAllBeritaDescending");
         return beritaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     public Berita fetchBeritaByJudul(String judul, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchBeritaByJudul");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             Optional<Berita> berita = beritaRepository.findByJudul(judul);
             if (!berita.isPresent()) {
                 throw new AllException("Judul Berita tidak ditemukan");
             }
             return berita.get();
-
-        } throw new AllException("Invalid User Role");
     }
 
     public Berita fetchBeritaByTanggal(LocalDate tanggals, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchBeritaByTanggal");
-
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             Optional<Berita> berita = beritaRepository.findByTanggals(tanggals);
             if (!berita.isPresent()) {
                 throw new AllException("Tanggal Berita tidak ditemukan");
             }
             return berita.get();
-        } throw new AllException("Invalid User Role");
     }
 
     public void deleteBeritaById(Long id, Map<String, String> requestMap) throws AllException {
