@@ -10,6 +10,8 @@ import com.sekolah.websekolah.repository.UserRepository;
 import com.sekolah.websekolah.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,6 +136,23 @@ public class UserService {
     public List<User> showAllUserByDescending(String field) {
         log.info("Inside showAllUserByDescending");
         return userRepository.findAll(Sort.by(Sort.Direction.DESC,field));
+    }
+    public Page<User> showAllUserWithPagination(int offset, int pageSize) {
+        log.info("Inside showAllUserWithPagination");
+        Page<User> page = userRepository.findAll(PageRequest.of(offset,pageSize));
+        return page;
+    }
+
+    public Page<User> showAllUserWithPaginationAscUsername(int offset, int pageSize) {
+        log.info("Inside showAllUserWithPaginationAscUsername");
+        Page<User> page = userRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("name").ascending()));
+        return page;
+    }
+
+    public Page<User> showAllUserWithPaginationDescUsername(int offset, int pageSize) {
+        log.info("Inside showAllUserWithPaginationDescUsername");
+        Page<User> page = userRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("name").descending()));
+        return page;
     }
 
     public ResponseEntity<String> changePassword(Map<String, String> requestMap, String userEmail) {
@@ -284,4 +303,6 @@ public class UserService {
         return updatedUser;
         } throw new AllException("Invalid user role");
     }
+
+
 }

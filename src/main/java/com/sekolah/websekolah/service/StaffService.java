@@ -7,6 +7,8 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +61,23 @@ public class StaffService {
     public List<Staff> showAllStaffDescending(String field) {
         log.info("Inside showAllStaffDescending");
         return staffRepository.findAll(Sort.by(Sort.Direction.DESC,field));
+    }
+    public Page<Staff> showAllStaffWithPagination(int offset, int pageSize) {
+        log.info("Inside showAllStaffWithPagination");
+        Page<Staff>page = staffRepository.findAll(PageRequest.of(offset,pageSize));
+        return page;
+    }
+
+    public Page<Staff> showAllStaffWithPaginationAscName(int offset, int pageSize) {
+        log.info("Inside showAllStaffWithPaginationAscName");
+        Page<Staff>page = staffRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("nama").ascending()));
+        return page;
+    }
+
+    public Page<Staff> showAllStaffWithPaginationDescName(int offset, int pageSize) {
+        log.info("showAllStaffWithPaginationDescName");
+        Page<Staff>page = staffRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("nama").descending()));
+        return page;
     }
 
     public Staff fetchStaffByNama(String nama, Map<String, String> requestMap) throws AllException {
@@ -132,5 +151,6 @@ public class StaffService {
             return updatedStaff;
         } throw new AllException("Invalid User Role");
     }
+
 
 }

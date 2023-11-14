@@ -6,6 +6,8 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.MuridRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -59,6 +61,23 @@ public class MuridService {
     public List<Murid> showAllMuridDescending(String field) {
         log.info("Inside showAllMuridDescending");
         return muridRepository.findAll(Sort.by(Sort.Direction.DESC,field));
+    }
+    public Page<Murid> showAllMuridWithPagination(int offset, int pageSize) {
+        log.info("Inside showAllMuridWithPagination");
+        Page<Murid> page = muridRepository.findAll(PageRequest.of(offset,pageSize));
+        return page;
+    }
+
+    public Page<Murid> showAllMuridWithPaginationAscName(int offset, int pageSize) {
+        log.info("Inside showAllMuridWithPaginationAscName");
+        Page<Murid> page = muridRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("nama").ascending()));
+        return page;
+    }
+
+    public Page<Murid> showAllMuridWithPaginationDescName(int offset, int pageSize) {
+        log.info("Inside showAllMuridWithPaginationDescName");
+        Page<Murid> page = muridRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("nama").descending()));
+        return page;
     }
 
     public Murid fetchMuridByNama(String nama, Map<String, String> requestMap) throws AllException {
@@ -137,5 +156,6 @@ public class MuridService {
         } throw new AllException("Invalid User Role");
 
     }
+
 
 }

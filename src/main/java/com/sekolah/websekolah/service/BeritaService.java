@@ -5,6 +5,8 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.BeritaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +65,23 @@ public class BeritaService {
     public List<Berita> showAllBeritaDescending(String field) {
         log.info("Inside showAllBeritaDescending");
         return beritaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
+    }
+    public Page<Berita> showAllBeritaWithPagination(int offset, int pageSize) {
+        log.info("Inside showAllBeritaWithPagination");
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize));
+        return pageable;
+    }
+
+    public Page<Berita> showAllBeritaWithPaginationAscJudul(int offset, int pageSize) {
+        log.info("Inside showAllBeritaWithPaginationAscJudul");
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judul").ascending()));
+        return pageable;
+    }
+
+    public Page<Berita> showAllBeritaWithPaginationDescJudul(int offset, int pageSize) {
+        log.info("Inside showAllBeritaWithPaginationDescJudul");
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judul").descending()));
+        return pageable;
     }
 
     public Berita fetchBeritaByJudul(String judul, Map<String, String> requestMap) throws AllException {
@@ -141,6 +160,7 @@ public class BeritaService {
 
         } throw new AllException("Invalid User Role");
     }
+
 
 
 }

@@ -22,6 +22,16 @@ public interface UserController {
     public List<User> showAllUserByAsc(@PathVariable String field) throws AllException;
     @GetMapping("/sortDsc/{field}")
     public List<User> showAllUserByDsc(@PathVariable String field) throws AllException;
+
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public ResponseEntity<List<User>> showAllProductPagination(@PathVariable int offset, @PathVariable int pageSize);
+
+    @GetMapping("/paginationascusername/{offset}/{pageSize}")
+    public ResponseEntity<List<User>> showAllProductPaginationAndSortAscbyUsername(@PathVariable int offset, @PathVariable int pageSize);
+
+    @GetMapping("/paginationdescusername/{offset}/{pageSize}")
+    public ResponseEntity<List<User>> showAllProductPaginationAndSortDescbyUsername(@PathVariable int offset, @PathVariable int pageSize);
+
     @PostMapping(path = "/forgotpassword")
     ResponseEntity<String>forgotPassword(@RequestBody Map<String,String> requestMap);
 

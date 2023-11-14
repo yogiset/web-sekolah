@@ -5,6 +5,8 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.repository.AgendaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +65,23 @@ public class AgendaService {
         log.info("Inside showAllAgendaDesccending");
 
         return agendaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
+    }
+    public Page<Agenda> showAllAgendaWithPagination(int offset, int pageSize) {
+        log.info("Inside showAllAgendaWithPagination");
+        Page<Agenda>pageable = agendaRepository.findAll(PageRequest.of(offset, pageSize));
+        return pageable;
+    }
+
+    public Page<Agenda> showAllAgendaWithPaginationAscJudul(int offset, int pageSize) {
+        log.info("Inside showAllAgendaWithPaginationAscJudul");
+        Page<Agenda>pageable = agendaRepository.findAll(PageRequest.of(offset, pageSize,Sort.by("judul").ascending()));
+        return pageable;
+    }
+
+    public Page<Agenda> showAllAgendaWithPaginationDescJudul(int offset, int pageSize) {
+        log.info("Inside showAllAgendaWithPaginationDescJudul");
+        Page<Agenda>pageable = agendaRepository.findAll(PageRequest.of(offset, pageSize,Sort.by("judul").descending()));
+        return pageable;
     }
 
     public Agenda fetchAgendaByJudul(String judul, Map<String, String> requestMap) throws AllException {
@@ -136,7 +155,6 @@ public class AgendaService {
 
         } throw new AllException("Invalid User Role");
     }
-
 
 
 

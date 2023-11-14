@@ -6,6 +6,8 @@ import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.service.UserService;
 import com.sekolah.websekolah.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +58,40 @@ public class UserControllerImpl implements UserController{
     public List<User> showAllUserByDsc(String field) throws AllException {
         return userService.showAllUserByDescending(field);
     }
+
+    @Override
+    public ResponseEntity<List<User>> showAllProductPagination(int offset, int pageSize) {
+        Page<User> userWithPagination = userService.showAllUserWithPagination(offset, pageSize);
+
+        List<User> userList = userWithPagination.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(userWithPagination.getTotalElements()));
+
+        return new ResponseEntity<>(userList, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<User>> showAllProductPaginationAndSortAscbyUsername(int offset, int pageSize) {
+        Page<User> userWithPaginationAscUsername = userService.showAllUserWithPaginationAscUsername(offset, pageSize);
+
+        List<User> userList = userWithPaginationAscUsername.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(userWithPaginationAscUsername.getTotalElements()));
+
+        return new ResponseEntity<>(userList, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<User>> showAllProductPaginationAndSortDescbyUsername(int offset, int pageSize) {
+        Page<User> userWithPaginationDescUsername = userService.showAllUserWithPaginationDescUsername(offset, pageSize);
+
+        List<User> userList = userWithPaginationDescUsername.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(userWithPaginationDescUsername.getTotalElements()));
+
+        return new ResponseEntity<>(userList, headers, HttpStatus.OK);
+    }
+
     @Override
     public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
         try {

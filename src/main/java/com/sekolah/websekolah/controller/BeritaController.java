@@ -1,11 +1,14 @@
 package com.sekolah.websekolah.controller;
 
 
-import com.sekolah.websekolah.entity.Agenda;
 import com.sekolah.websekolah.entity.Berita;
 import com.sekolah.websekolah.exception.AllException;
 import com.sekolah.websekolah.service.BeritaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,6 +39,37 @@ public class BeritaController {
     @GetMapping("/sortDsc/{field}")
     public List<Berita> showAllBeritaByDsc(@PathVariable String field) throws AllException {
         return beritaService.showAllBeritaDescending(field);
+    }
+
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public ResponseEntity<List<Berita>> showAllBeritaPagination(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<Berita> beritaWithPagination = beritaService.showAllBeritaWithPagination(offset, pageSize);
+
+        List<Berita> beritaList = beritaWithPagination.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(beritaWithPagination.getTotalElements()));
+
+        return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
+    }
+    @GetMapping("/paginationascjudul/{offset}/{pageSize}")
+    public ResponseEntity<List<Berita>> showAllBeritaPaginationAndSortAscbyJudul(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<Berita> beritaWithPaginationAscbyJudul = beritaService.showAllBeritaWithPaginationAscJudul(offset, pageSize);
+
+        List<Berita> beritaList = beritaWithPaginationAscbyJudul.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(beritaWithPaginationAscbyJudul.getTotalElements()));
+
+        return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
+    }
+    @GetMapping("/paginationdescjudul/{offset}/{pageSize}")
+    public ResponseEntity<List<Berita>> showAllBeritaPaginationAndSortDescbyJudul(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<Berita> beritaWithPaginationDescbyJudul = beritaService.showAllBeritaWithPaginationDescJudul(offset, pageSize);
+
+        List<Berita> beritaList = beritaWithPaginationDescbyJudul.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(beritaWithPaginationDescbyJudul.getTotalElements()));
+
+        return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
     }
 
     @GetMapping("/cari/{judul}")
