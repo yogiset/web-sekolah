@@ -22,8 +22,7 @@ public class MuridService {
 
     public Murid addMurid(Murid murid, Map<String, String> requestMap) throws AllException {
         log.info("Inside addMurid");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
+
             if (murid.getNama() == null || murid.getNama().isEmpty()) {
                 throw new AllException("nama murid harus di isi !!!");
             }
@@ -45,8 +44,6 @@ public class MuridService {
 
 
             return muridRepository.save(murid);
-        } throw new AllException("Invalid User Role");
-
     }
 
     public List<Murid> showAllMurid(Map<String, String> requestMap) throws AllException {
@@ -100,22 +97,17 @@ public class MuridService {
 
     public void deleteMuridById(Long id, Map<String, String> requestMap) throws AllException {
         log.info("Inside deleteMuridById");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
+
             boolean exist = muridRepository.existsById(id);
             if (!exist) {
                 throw new AllException("murid dengan Id" + id + "tidak ada");
             }
             muridRepository.deleteById(id);
-
-        } throw new AllException("Invalid User Role");
-
     }
 
     public Murid updateMurid(Long id, Murid murid, Map<String, String> requestMap) throws AllException {
         log.info("Inside updateMurid");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
+
             if (murid.getNama() == null || murid.getNama().isEmpty()) {
                 throw new AllException("nama murid harus di isi !!!");
             }
@@ -152,9 +144,6 @@ public class MuridService {
             muridRepository.save(updatedMurid);
 
             return updatedMurid;
-
-        } throw new AllException("Invalid User Role");
-
     }
 
 

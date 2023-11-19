@@ -39,9 +39,6 @@ public class UserService {
     public ResponseEntity<String> createAccount(Map<String, String> requestMap) {
         log.info("Inside Create Account",requestMap);
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole)) {
-
             try {
 
                 if (!validateCreateAccountMap(requestMap)) {
@@ -64,8 +61,7 @@ public class UserService {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
-        }    return UserUtils.getResponseEntity("Invalid user role", HttpStatus.INTERNAL_SERVER_ERROR);
+        return UserUtils.getResponseEntity(ApiConstant.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateCreateAccountMap(Map<String, String> requestMap) {
@@ -258,22 +254,16 @@ public class UserService {
     }
 
     public void deleteUserById(Long id,Map<String, String> requestMap) throws AllException {
-        String userRole = requestMap.get("role");
 
-        if ("owner".equalsIgnoreCase(userRole)) {
         boolean exist = userRepository.existsById(id);
         if (!exist) {
             throw new AllException("User dengan Id" + id + "tidak ada");
         }
         userRepository.deleteById(id);
-        } throw new AllException("Invalid user role");
+
     }
 
-
     public User updateUser(Long id, User user,Map<String, String> requestMap) throws AllException {
-        String userRole = requestMap.get("role");
-
-        if ("owner".equalsIgnoreCase(userRole)) {
 
         if (user.getName() == null || user.getName().isEmpty()) {
             throw new AllException("Nama harus di isi !!!");
@@ -301,7 +291,6 @@ public class UserService {
         userRepository.save(updatedUser);
 
         return updatedUser;
-        } throw new AllException("Invalid user role");
     }
 
 

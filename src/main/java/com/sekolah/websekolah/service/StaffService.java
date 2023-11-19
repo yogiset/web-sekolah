@@ -25,8 +25,7 @@ public class StaffService {
 
     public Staff addStaff(Staff staff, Map<String, String> requestMap) throws AllException {
         log.info("Inside addStaff");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
+
             if (staff.getNama() == null || staff.getNama().isEmpty()) {
                 throw new AllException("nama staff harus di isi !!!");
             }
@@ -44,8 +43,8 @@ public class StaffService {
             }
 
 
-         staffRepository.save(staff);
-        } throw new AllException("Invalid User Role");
+       return staffRepository.save(staff);
+
     }
 
     public List<Staff> showAllStaff(Map<String, String> requestMap) throws AllException {
@@ -100,22 +99,16 @@ public class StaffService {
 
     public void deleteStaffById(Long id, Map<String, String> requestMap) throws AllException {
         log.info("Inside deleteStaffById");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
             boolean exist = staffRepository.existsById(id);
             if (!exist) {
                 throw new AllException("staff dengan Id" + id + "tidak ada");
             }
             staffRepository.deleteById(id);
-
-        } throw new AllException("Invalid User Role");
     }
 
     public Staff updateStaff(Long id, Staff staff, Map<String, String> requestMap) throws AllException {
         log.info("Inside updateStaff");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
             if (staff.getNama() == null || staff.getNama().isEmpty()) {
                 throw new AllException("nama staff harus di isi !!!");
@@ -149,7 +142,6 @@ public class StaffService {
             staffRepository.save(updatedStaff);
 
             return updatedStaff;
-        } throw new AllException("Invalid User Role");
     }
 
 

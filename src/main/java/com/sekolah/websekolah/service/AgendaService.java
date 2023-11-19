@@ -25,8 +25,6 @@ public class AgendaService {
 
     public Agenda addAgenda(Agenda agenda, Map<String, String> requestMap) throws AllException {
         log.info("Inside addAgenda");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
             if (agenda.getJudul() == null || agenda.getJudul().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
@@ -46,8 +44,6 @@ public class AgendaService {
 
 
             return agendaRepository.save(agenda);
-
-        } throw new AllException("Invalid User Role");
     }
 
     public List<Agenda> showAllAgenda(Map<String, String> requestMap) throws AllException {
@@ -107,23 +103,15 @@ public class AgendaService {
     public void deleteAgendaById(Long id, Map<String, String> requestMap) throws AllException {
         log.info("Inside deleteAgendaById");
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             boolean exist = agendaRepository.existsById(id);
             if (!exist) {
                 throw new AllException("Agenda dengan Id" + id + "tidak ada");
             }
             agendaRepository.deleteById(id);
-
-
-        } throw new AllException("Invalid User Role");
     }
 
     public Agenda updateAgenda(Long id, Agenda agenda, Map<String, String> requestMap) throws AllException {
         log.info("Inside updateAgenda");
-
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
             if (agenda.getJudul() == null || agenda.getJudul().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
@@ -152,8 +140,6 @@ public class AgendaService {
             agendaRepository.save(updatedAgenda);
 
             return updatedAgenda;
-
-        } throw new AllException("Invalid User Role");
     }
 
 

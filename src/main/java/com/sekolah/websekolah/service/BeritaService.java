@@ -23,8 +23,6 @@ public class BeritaService {
 
     public Berita addBerita(Berita berita, Map<String, String> requestMap) throws AllException {
        log.info("Inside addBerita");
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
 
             if (berita.getJudul() == null || berita.getJudul().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
@@ -48,8 +46,6 @@ public class BeritaService {
                 throw  new AllException("Created harus di isi !!!");
             }
             return beritaRepository.save(berita);
-
-        } throw new AllException("Invalid User Role");
     }
 
     public List<Berita> showAllBerita(Map<String, String> requestMap) throws AllException {
@@ -105,22 +101,17 @@ public class BeritaService {
     public void deleteBeritaById(Long id, Map<String, String> requestMap) throws AllException {
         log.info("Inside deleteBeritaById");
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             boolean exist = beritaRepository.existsById(id);
             if (!exist) {
                 throw new AllException("berita dengan Id" + id + "tidak ada");
             }
             beritaRepository.deleteById(id);
 
-        } throw new AllException("Invalid User Role");
     }
 
     public Berita updateBerita(Long id, Berita berita, Map<String, String> requestMap) throws AllException {
         log.info("Inside updateBerita");
 
-        String userRole = requestMap.get("role");
-        if ("owner".equalsIgnoreCase(userRole) || "admin".equalsIgnoreCase(userRole)) {
             if (berita.getJudul() == null || berita.getJudul().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
             }
@@ -156,9 +147,6 @@ public class BeritaService {
             beritaRepository.save(updatedBerita);
 
             return updatedBerita;
-
-
-        } throw new AllException("Invalid User Role");
     }
 
 
