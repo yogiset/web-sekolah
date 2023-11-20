@@ -34,9 +34,9 @@ public class UserControllerImpl implements UserController{
     }
 
     @Override
-    public ResponseEntity<String> login(Map<String, String> requestMap) {
+    public ResponseEntity<String> login(User user) {
         try {
-            return userService.login(requestMap);
+            return userService.login(user);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
