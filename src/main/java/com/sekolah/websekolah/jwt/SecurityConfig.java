@@ -53,7 +53,7 @@ public class SecurityConfig {
         http    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests()
-                .requestMatchers("")
+                .requestMatchers("/agenda/**","/berita/**","/murid/**","/staff/**","/user/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -68,7 +68,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(""));
+        configuration.setAllowedOrigins(Arrays.asList("https://websekolahku.vercel.app/","https://websekolahku.vercel.app","http://localhost:5173","http://localhost:5173/"));
         configuration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin",
                 "Content-Type", "Accept", "Authorization", "Origin, Accept", "X-Requested-With",
                 "Access-Control-Request-Method", "Access-Control-Request-Headers"));
