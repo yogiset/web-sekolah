@@ -15,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
@@ -35,6 +37,8 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<String> createAccount(Map<String, String> requestMap) {
         log.info("Inside Create Account",requestMap);
@@ -84,39 +88,44 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<String> login(Map<String, String> requestMap) {
+    public ResponseEntity<String> login(User user) {
         log.info("Inside Login");
         try {
-            String email = requestMap.get("email");
-            String password = requestMap.get("password");
+            String email = user.getEmail();
+            String password = user.getPassword();
 
 
             Optional<User> userOpt1 = userRepository.findByEmail(email);
             if (!userOpt1.isPresent()) {
                 return new ResponseEntity<>("{\"message\":\"Our System didn't find your email, Please Register first !\"}", HttpStatus.BAD_REQUEST);
             }
-            // Retrieve the user by email from the repository
-            User user = userRepository.findByEmailId(email);
-            if (user != null) {
-                // Check if the provided password matches the stored password
-                if (passwordEncoder.matches(password, user.getPassword())) {
-                    if ("true".equalsIgnoreCase(user.getStatus())) {
-                        // Generate the JWT token for the authenticated user
-                        String jwtToken = jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName());
 
-                        // Return the token as a JSON response
-                        return new ResponseEntity<>("{\"token\":\"" + jwtToken + "\"}", HttpStatus.OK);
-                    } else {
-                        return new ResponseEntity<>("{\"message\":\"Your Account has been locked,please ask owner !\"}", HttpStatus.BAD_REQUEST);
-                    }
+            User userr = userRepository.findByEmailId(email);
+            if (userr != null) {
+                // Check if the provided password matches the stored password
+
+                if ("true".equalsIgnoreCase(userr.getStatus())) {
+
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    email,password
+                            )
+                    );
+                    // Generate the JWT token for the authenticated user
+                    String jwtToken = jwtUtil.generateToken(userr.getEmail(), userr.getRole(), userr.getName());
+
+                    // Return the token as a JSON response
+                    return new ResponseEntity<>("{\"token\":\"" + jwtToken + "\"}", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("{\"message\":\"Please Verify your email first.\"}", HttpStatus.BAD_REQUEST);
                 }
             }
-
         } catch (Exception ex) {
             log.error("{}", ex);
         }
         return new ResponseEntity<>("{\"message\":\"Bad Credentials. Please check your password or email\"}", HttpStatus.BAD_REQUEST);
     }
+
 
     public List<User> listUser(Map<String,String> requestMap) throws AllException {
         log.info("Inside listUser");
