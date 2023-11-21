@@ -68,12 +68,12 @@ public class AgendaController {
         return new ResponseEntity<>(agendaList, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/cari/{judul}")
+    @GetMapping("/carijudul/{judul}")
     public Agenda fetchAgendaByJudul(@PathVariable("judul") String judul,Map<String, String> requestMap) throws AllException {
         return agendaService.fetchAgendaByJudul(judul,requestMap);
     }
 
-    @GetMapping("/cari/{tanggals}")
+    @GetMapping("/caritanggal/{tanggals}")
     public Agenda fetchAgendaByTanggal(@PathVariable("tanggals")LocalDate tanggals,Map<String, String> requestMap) throws AllException {
         return agendaService.fetchAgendaByTanggal(tanggals,requestMap);
     }

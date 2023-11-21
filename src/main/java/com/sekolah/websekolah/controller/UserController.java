@@ -38,7 +38,7 @@ public interface UserController {
     @PostMapping("/changepassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String, String> requestMap,String userEmail);
 
-    @GetMapping("/cari/{name}")
+    @GetMapping("/cariuser/{name}")
     public User fetchUserByName(@PathVariable("name") String name,Map<String, String> requestMap) throws AllException;
 
     @DeleteMapping("/delete/{id}")

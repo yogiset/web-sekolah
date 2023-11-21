@@ -71,12 +71,12 @@ private final StaffService staffService;
         return new ResponseEntity<>(staffList, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/cari/{nama}")
+    @GetMapping("/carinama/{nama}")
     public Staff fetchStaffByNama(@PathVariable("nama") String nama,Map<String, String> requestMap) throws AllException {
         return staffService.fetchStaffByNama(nama,requestMap);
     }
 
-    @GetMapping("/cari/{nip}")
+    @GetMapping("/carinip/{nip}")
     public Staff fetchStaffByNis(@PathVariable("nip") String nip,Map<String, String> requestMap) throws AllException {
         return staffService.fetchStaffByNis(nip,requestMap);
     }

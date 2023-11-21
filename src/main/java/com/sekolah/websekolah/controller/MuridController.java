@@ -69,12 +69,12 @@ public class MuridController {
         return new ResponseEntity<>(muridList, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/cari/{nama}")
+    @GetMapping("/carinama/{nama}")
     public Murid fetchMuridByNama(@PathVariable("nama") String nama,Map<String, String> requestMap) throws AllException {
         return muridService.fetchMuridByNama(nama,requestMap);
     }
 
-    @GetMapping("/cari/{nis}")
+    @GetMapping("/carinis/{nis}")
     public Murid fetchMuridByNis(@PathVariable("nis") String nis,Map<String, String> requestMap) throws AllException {
         return muridService.fetchMuridByNis(nis,requestMap);
     }
