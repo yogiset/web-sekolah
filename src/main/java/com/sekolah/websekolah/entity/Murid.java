@@ -22,7 +22,7 @@ public class Murid {
     private Long id;
     private String nama;
     private String namawali;
-    private Integer no_telp;
+    private String no_telp;
     private String nis;
     private LocalDate tgl_lahir;
     private Integer umur;
