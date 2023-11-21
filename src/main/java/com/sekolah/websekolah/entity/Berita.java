@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Data
@@ -26,6 +26,6 @@ public class Berita {
     private String image;
     private String deskripsi;
     private String kategori;
-    private String created;
+    private Instant created;
 
 }
