@@ -90,7 +90,6 @@ public class AgendaService {
             return agenda.get();
 
     }
-
     public Agenda fetchAgendaByTanggal(LocalDate tanggals, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchAgendaByTanggal");
             Optional<Agenda> agenda = agendaRepository.findByTanggals(tanggals);
