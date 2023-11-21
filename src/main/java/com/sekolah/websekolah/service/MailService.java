@@ -28,7 +28,7 @@ public class MailService {
             helper.setFrom("sekolahku@Sekolah.sch.id");
             helper.setTo(email);
             helper.setSubject(subject);
-            String htmlMsg = "<p><b>Your Login details for Web sekolah System</b><br><b>Email: </b> " + email + " <br><b>Password: </b> " + newPassword + "<br><a href=\"http://localhost:3000/login\">Click here to login</a></p>" + "Don't forget to change your password, thank you for using our service";
+            String htmlMsg = "<p><b>Your Login details for Web sekolah System</b><br><b>Email: </b> " + email + " <br><b>Password: </b> " + newPassword + "<br><a href=\"http://localhost:5173/login\">Click here to login</a></p>" + "Don't forget to change your password, thank you for using our service";
             mimeMessage.setContent(htmlMsg, "text/html");
         };
 
