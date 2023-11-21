@@ -26,7 +26,7 @@ public class MuridController {
     }
 
     @GetMapping("/all")
-    public List<Murid> showAllMurid(@RequestBody Map<String, String> requestMap) throws AllException {
+    public List<Murid> showAllMurid(Map<String, String> requestMap) throws AllException {
         return muridService.showAllMurid(requestMap);
     }
 

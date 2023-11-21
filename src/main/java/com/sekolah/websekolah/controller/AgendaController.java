@@ -26,7 +26,7 @@ public class AgendaController {
     }
 
     @GetMapping("/all")
-    public List<Agenda> showAllAgenda(@RequestBody Map<String, String> requestMap) throws AllException {
+    public List<Agenda> showAllAgenda(Map<String, String> requestMap) throws AllException {
         return agendaService.showAllAgenda(requestMap);
     }
     @GetMapping("/sortAsc/{field}")

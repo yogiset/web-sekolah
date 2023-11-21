@@ -17,7 +17,7 @@ public interface UserController {
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(@RequestBody(required = true) User user);
     @GetMapping(path = "/all")
-    public List<User> listUser(@RequestBody Map<String,String> requestMap) throws AllException;
+    public List<User> listUser(Map<String,String> requestMap) throws AllException;
     @GetMapping("/sortAsc/{field}")
     public List<User> showAllUserByAsc(@PathVariable String field) throws AllException;
     @GetMapping("/sortDsc/{field}")

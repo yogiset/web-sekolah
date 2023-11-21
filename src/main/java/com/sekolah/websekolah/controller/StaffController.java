@@ -27,7 +27,7 @@ private final StaffService staffService;
     }
 
     @GetMapping("/all")
-    public List<Staff> showAllStaff(@RequestBody Map<String, String> requestMap) throws AllException {
+    public List<Staff> showAllStaff(Map<String, String> requestMap) throws AllException {
         return staffService.showAllStaff(requestMap);
     }
 

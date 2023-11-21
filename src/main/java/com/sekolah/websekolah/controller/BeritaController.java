@@ -28,7 +28,7 @@ public class BeritaController {
     }
 
     @GetMapping("/all")
-    public List<Berita> showAllBerita(@RequestBody Map<String, String> requestMap) throws AllException {
+    public List<Berita> showAllBerita(Map<String, String> requestMap) throws AllException {
         return beritaService.showAllBerita(requestMap);
     }
 
