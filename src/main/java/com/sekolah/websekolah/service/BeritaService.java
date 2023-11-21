@@ -24,13 +24,13 @@ public class BeritaService {
     public Berita addBerita(Berita berita, Map<String, String> requestMap) throws AllException {
        log.info("Inside addBerita");
 
-            if (berita.getJudul() == null || berita.getJudul().isEmpty()) {
+            if (berita.getJudulberita() == null || berita.getJudulberita().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
             }
             if (berita.getTanggal() == null || berita.getTanggal().isEmpty()) {
                 throw new AllException("teks Tanggal harus di isi !!!");
             }
-            if (berita.getTanggals() == null) {
+            if (berita.getTanggalberita() == null) {
                 throw new AllException("LocalDate Tanggal harus di isi !!!");
             }
             if (berita.getImage() == null || berita.getImage().isEmpty()) {
@@ -80,18 +80,17 @@ public class BeritaService {
         return pageable;
     }
 
-    public Berita fetchBeritaByJudul(String judul, Map<String, String> requestMap) throws AllException {
+    public Berita fetchBeritaByJudul(String judulberita, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchBeritaByJudul");
-            Optional<Berita> berita = beritaRepository.findByJudul(judul);
+            Optional<Berita> berita = beritaRepository.findByJudulberita(judulberita);
             if (!berita.isPresent()) {
                 throw new AllException("Judul Berita tidak ditemukan");
             }
             return berita.get();
     }
-
-    public Berita fetchBeritaByTanggal(LocalDate tanggals, Map<String, String> requestMap) throws AllException {
+    public Berita fetchBeritaByTanggal(LocalDate tanggalberita, Map<String, String> requestMap) throws AllException {
         log.info("Inside fetchBeritaByTanggal");
-            Optional<Berita> berita = beritaRepository.findByTanggals(tanggals);
+            Optional<Berita> berita = beritaRepository.findByTanggalberita(tanggalberita);
             if (!berita.isPresent()) {
                 throw new AllException("Tanggal Berita tidak ditemukan");
             }
@@ -112,13 +111,13 @@ public class BeritaService {
     public Berita updateBerita(Long id, Berita berita, Map<String, String> requestMap) throws AllException {
         log.info("Inside updateBerita");
 
-            if (berita.getJudul() == null || berita.getJudul().isEmpty()) {
+            if (berita.getJudulberita() == null || berita.getJudulberita().isEmpty()) {
                 throw new AllException("Judul harus di isi !!!");
             }
             if (berita.getTanggal() == null || berita.getTanggal().isEmpty()) {
                 throw new AllException("teks Tanggal harus di isi !!!");
             }
-            if (berita.getTanggals() == null) {
+            if (berita.getTanggalberita() == null) {
                 throw new AllException("LocalDate Tanggal harus di isi !!!");
             }
             if (berita.getImage() == null || berita.getImage().isEmpty()) {
@@ -137,9 +136,9 @@ public class BeritaService {
             Berita updatedBerita = beritaRepository.findById(id)
                     .orElseThrow(() -> new AllException("Berita dengan Id" + id + "tidak ada"));
 
-            updatedBerita.setJudul(berita.getJudul());
+            updatedBerita.setJudulberita(berita.getJudulberita());
             updatedBerita.setTanggal(berita.getTanggal());
-            updatedBerita.setTanggals(berita.getTanggals());
+            updatedBerita.setTanggalberita(berita.getTanggalberita());
             updatedBerita.setImage(berita.getImage());
             updatedBerita.setDeskripsi(berita.getDeskripsi());
             updatedBerita.setKategori(berita.getKategori());

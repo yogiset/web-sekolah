@@ -19,9 +19,9 @@ public class Berita {
     @SequenceGenerator(name = "berita_sequence",sequenceName = "berita_sequence",allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String judul;
+    private String judulberita;
     private String tanggal;
-    private LocalDate tanggals;
+    private LocalDate tanggalberita;
     @Column(columnDefinition="text")
     private String image;
     private String deskripsi;
