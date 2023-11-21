@@ -199,7 +199,7 @@ public class UserService {
                 return UserUtils.getResponseEntity("User not found", HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 log.error("Token is null or empty");
-                return UserUtils.getResponseEntity("Token is null or empty", HttpStatus.BAD_REQUEST);
+                return UserUtils.getResponseEntity("userEmail or token null or empty", HttpStatus.BAD_REQUEST);
             }
         } catch (Exception ex) {
             // Log the exception for debugging purposes
