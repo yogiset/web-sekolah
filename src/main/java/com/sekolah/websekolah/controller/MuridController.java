@@ -70,17 +70,17 @@ public class MuridController {
     }
 
     @GetMapping("/cari/{nama}")
-    public Murid fetchMuridByNama(@PathVariable("nama") String nama,@RequestBody Map<String, String> requestMap) throws AllException {
+    public Murid fetchMuridByNama(@PathVariable("nama") String nama,Map<String, String> requestMap) throws AllException {
         return muridService.fetchMuridByNama(nama,requestMap);
     }
 
     @GetMapping("/cari/{nis}")
-    public Murid fetchMuridByNis(@PathVariable("nis") String nis, @RequestBody Map<String, String> requestMap) throws AllException {
+    public Murid fetchMuridByNis(@PathVariable("nis") String nis,Map<String, String> requestMap) throws AllException {
         return muridService.fetchMuridByNis(nis,requestMap);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteMuridById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException {
+    public String deleteMuridById(@PathVariable("id") Long id,Map<String, String> requestMap) throws AllException {
         muridService.deleteMuridById(id,requestMap);
         return "Murid telah dihapus!!";
     }

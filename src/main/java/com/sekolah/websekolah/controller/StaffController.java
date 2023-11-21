@@ -72,17 +72,17 @@ private final StaffService staffService;
     }
 
     @GetMapping("/cari/{nama}")
-    public Staff fetchStaffByNama(@PathVariable("nama") String nama,@RequestBody Map<String, String> requestMap) throws AllException {
+    public Staff fetchStaffByNama(@PathVariable("nama") String nama,Map<String, String> requestMap) throws AllException {
         return staffService.fetchStaffByNama(nama,requestMap);
     }
 
     @GetMapping("/cari/{nip}")
-    public Staff fetchStaffByNis(@PathVariable("nip") String nip, @RequestBody Map<String, String> requestMap) throws AllException {
+    public Staff fetchStaffByNis(@PathVariable("nip") String nip,Map<String, String> requestMap) throws AllException {
         return staffService.fetchStaffByNis(nip,requestMap);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteStaffById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException {
+    public String deleteStaffById(@PathVariable("id") Long id,Map<String, String> requestMap) throws AllException {
         staffService.deleteStaffById(id,requestMap);
         return "Staff telah dihapus!!";
     }

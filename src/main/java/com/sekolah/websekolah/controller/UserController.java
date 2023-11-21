@@ -39,10 +39,10 @@ public interface UserController {
     ResponseEntity<String> changePassword(@RequestBody Map<String, String> requestMap,String userEmail);
 
     @GetMapping("/cari/{name}")
-    public User fetchUserByName(@PathVariable("name") String name,@RequestBody Map<String, String> requestMap) throws AllException;
+    public User fetchUserByName(@PathVariable("name") String name,Map<String, String> requestMap) throws AllException;
 
     @DeleteMapping("/delete/{id}")
-    public String deleteUserById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException;
+    public String deleteUserById(@PathVariable("id") Long id,Map<String, String> requestMap) throws AllException;
 
     @PutMapping("/update/{id}")
     public User updateUser(@PathVariable("id") Long id,@RequestBody User user,Map<String, String> requestMap) throws AllException;

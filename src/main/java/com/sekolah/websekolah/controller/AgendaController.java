@@ -69,17 +69,17 @@ public class AgendaController {
     }
 
     @GetMapping("/cari/{judul}")
-    public Agenda fetchAgendaByJudul(@PathVariable("judul") String judul,@RequestBody Map<String, String> requestMap) throws AllException {
+    public Agenda fetchAgendaByJudul(@PathVariable("judul") String judul,Map<String, String> requestMap) throws AllException {
         return agendaService.fetchAgendaByJudul(judul,requestMap);
     }
 
     @GetMapping("/cari/{tanggals}")
-    public Agenda fetchAgendaByTanggal(@PathVariable("tanggals")LocalDate tanggals,@RequestBody Map<String, String> requestMap) throws AllException {
+    public Agenda fetchAgendaByTanggal(@PathVariable("tanggals")LocalDate tanggals,Map<String, String> requestMap) throws AllException {
         return agendaService.fetchAgendaByTanggal(tanggals,requestMap);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteAgendaById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException {
+    public String deleteAgendaById(@PathVariable("id") Long id,Map<String, String> requestMap) throws AllException {
         agendaService.deleteAgendaById(id,requestMap);
         return "Agenda telah dihapus!!";
     }

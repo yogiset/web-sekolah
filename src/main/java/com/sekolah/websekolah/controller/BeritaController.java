@@ -73,17 +73,17 @@ public class BeritaController {
     }
 
     @GetMapping("/cari/{judul}")
-    public Berita fetchBeritaByJudul(@PathVariable("judul") String judul,@RequestBody Map<String, String> requestMap) throws AllException {
+    public Berita fetchBeritaByJudul(@PathVariable("judul") String judul,Map<String, String> requestMap) throws AllException {
         return beritaService.fetchBeritaByJudul(judul,requestMap);
     }
 
     @GetMapping("/cari/{tanggals}")
-    public Berita fetchBeritaByTanggal(@PathVariable("tanggals") LocalDate tanggals, @RequestBody Map<String, String> requestMap) throws AllException {
+    public Berita fetchBeritaByTanggal(@PathVariable("tanggals") LocalDate tanggals,Map<String, String> requestMap) throws AllException {
         return beritaService.fetchBeritaByTanggal(tanggals,requestMap);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteBeritaById(@PathVariable("id") Long id,@RequestBody Map<String, String> requestMap) throws AllException {
+    public String deleteBeritaById(@PathVariable("id") Long id,Map<String, String> requestMap) throws AllException {
         beritaService.deleteBeritaById(id,requestMap);
         return "Berita telah dihapus!!";
     }
