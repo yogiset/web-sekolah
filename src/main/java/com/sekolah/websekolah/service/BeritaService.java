@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +44,8 @@ public class BeritaService {
             if(berita.getKategori() == null || berita.getKategori().isEmpty()) {
                 throw  new AllException("Kategori harus di isi !!!");
             }
-            if(berita.getCreated() == null || berita.getCreated().isEmpty()){
-                throw  new AllException("Created harus di isi !!!");
-            }
+
+            berita.setCreated(Instant.now());
             return beritaRepository.save(berita);
     }
 
@@ -152,9 +152,7 @@ public class BeritaService {
             if(berita.getKategori() == null || berita.getKategori().isEmpty()) {
                 throw  new AllException("Kategori harus di isi !!!");
             }
-            if(berita.getCreated() == null || berita.getCreated().isEmpty()){
-                throw  new AllException("Created harus di isi !!!");
-            }
+
 
             Berita updatedBerita = beritaRepository.findById(id)
                     .orElseThrow(() -> new AllException("Berita dengan Id" + id + "tidak ada"));
@@ -165,7 +163,6 @@ public class BeritaService {
             updatedBerita.setImage(berita.getImage());
             updatedBerita.setDeskripsi(berita.getDeskripsi());
             updatedBerita.setKategori(berita.getKategori());
-            updatedBerita.setCreated(berita.getCreated());
             beritaRepository.save(updatedBerita);
 
             return updatedBerita;
