@@ -41,6 +41,16 @@ public class BeritaController {
         return beritaService.showAllBeritaDescending(field);
     }
 
+    @GetMapping("/sortAsclimit/{field}/{pageSize}")
+    public List<Berita> showAllBeritaByAsclimit(@PathVariable String field,@PathVariable int pageSize) throws AllException {
+
+        return beritaService.showAllBeritaAscendingLimit(field,pageSize);
+    }
+    @GetMapping("/sortDsclimit/{field}/{pageSize}")
+    public List<Berita> showAllBeritaByDsclimit(@PathVariable String field,@PathVariable int pageSize) throws AllException {
+        return beritaService.showAllBeritaDescendingLimit(field,pageSize);
+    }
+
     @GetMapping("/pagination/{offset}/{pageSize}")
     public ResponseEntity<List<Berita>> showAllBeritaPagination(@PathVariable int offset, @PathVariable int pageSize) {
         Page<Berita> beritaWithPagination = beritaService.showAllBeritaWithPagination(offset, pageSize);
@@ -68,6 +78,27 @@ public class BeritaController {
         List<Berita> beritaList = beritaWithPaginationDescbyJudul.getContent();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(beritaWithPaginationDescbyJudul.getTotalElements()));
+
+        return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/paginationasctanggal/{offset}/{pageSize}")
+    public ResponseEntity<List<Berita>> showAllBeritaPaginationAndSortAscbyTanggal(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<Berita> beritaWithPaginationAscbyTanggalBerita = beritaService.showAllBeritaWithPaginationAscTanggalBerita(offset, pageSize);
+
+        List<Berita> beritaList = beritaWithPaginationAscbyTanggalBerita.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(beritaWithPaginationAscbyTanggalBerita.getTotalElements()));
+
+        return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
+    }
+    @GetMapping("/paginationdesctanggal/{offset}/{pageSize}")
+    public ResponseEntity<List<Berita>> showAllBeritaPaginationAndSortDescbyTanggal(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<Berita> beritaWithPaginationDescbyTanggalBerita = beritaService.showAllBeritaWithPaginationDescTanggalBerita(offset, pageSize);
+
+        List<Berita> beritaList = beritaWithPaginationDescbyTanggalBerita.getContent();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", String.valueOf(beritaWithPaginationDescbyTanggalBerita.getTotalElements()));
 
         return new ResponseEntity<>(beritaList, headers, HttpStatus.OK);
     }

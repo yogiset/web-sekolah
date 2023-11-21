@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,17 @@ public class BeritaService {
         log.info("Inside showAllBeritaDescending");
         return beritaRepository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
+    public List<Berita> showAllBeritaAscendingLimit(String field, int pageSize) {
+        log.info("Inside showAllBeritaAscendingLimit");
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.ASC, field));
+        return beritaRepository.findAll(pageable).getContent();
+    }
+
+    public List<Berita> showAllBeritaDescendingLimit(String field, int pageSize) {
+        log.info("Inside showAllBeritaDescendingLimit");
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, field));
+        return beritaRepository.findAll(pageable).getContent();
+    }
     public Page<Berita> showAllBeritaWithPagination(int offset, int pageSize) {
         log.info("Inside showAllBeritaWithPagination");
         Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize));
@@ -70,13 +82,24 @@ public class BeritaService {
 
     public Page<Berita> showAllBeritaWithPaginationAscJudul(int offset, int pageSize) {
         log.info("Inside showAllBeritaWithPaginationAscJudul");
-        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judul").ascending()));
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judulberita").ascending()));
         return pageable;
     }
 
     public Page<Berita> showAllBeritaWithPaginationDescJudul(int offset, int pageSize) {
         log.info("Inside showAllBeritaWithPaginationDescJudul");
-        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judul").descending()));
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("judulberita").descending()));
+        return pageable;
+    }
+
+    public Page<Berita> showAllBeritaWithPaginationAscTanggalBerita(int offset, int pageSize) {
+        log.info("Inside showAllBeritaWithPaginationAscTanggalBerita");
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("tanggalberita").ascending()));
+        return pageable;
+    }
+    public Page<Berita> showAllBeritaWithPaginationDescTanggalBerita(int offset, int pageSize) {
+        log.info("Inside showAllBeritaWithPaginationDescTanggalBerita");
+        Page<Berita> pageable = beritaRepository.findAll(PageRequest.of(offset,pageSize,Sort.by("tanggalberita").descending()));
         return pageable;
     }
 
